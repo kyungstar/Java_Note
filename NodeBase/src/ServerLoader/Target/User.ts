@@ -11,7 +11,6 @@ import Logger from "../../modules/Logger";
 
 export default async () => {
 
-
     // JSON 파싱 미들웨어를 사용하고, 요청 본문의 크기를 제한합니다.
     app.use(express.json({limit: '50mb'}));
 
