@@ -8,7 +8,7 @@
 import Winston from 'winston';
 import WinstonDaily from 'winston-daily-rotate-file';
 
-import Config from '../../Config';
+import Config from '../../config';
 
 class Logger {
 

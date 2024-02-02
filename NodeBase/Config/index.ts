@@ -1,9 +1,9 @@
 
 import dotenv from "dotenv";
 import path from "path";
-import os from "os";
 
 process.env.ROOT_PATH = path.join(__dirname, "..");
+
 let envFound = dotenv.config({path: __dirname + "/.env." + process.argv[2].toLowerCase()});
 
 if (envFound.error) {
@@ -11,25 +11,22 @@ if (envFound.error) {
     throw new Error("Couldn't find .env file");
 }
 
-
+export enum ServerEnum {
+    WAS = "WAS",
+    DFS = "DFS"
+}
 
 class Config {
 
     // Global
     PORT: number;
+    DOCS_PORT: number;
     SERVER_TYPE: string;
     DEFAULT_FILE_PATH: string;
+    OS_TYPE: string;
     FILE_SIZE: number;
-
-    DB: {
-        DATABASE: string;
-        PASSWORD: string;
-        PORT: number;
-        HOST: string;
-        USER: string;
-        CONNECTION_LIMIT: string;
-        ENTITY_PATH: string;
-    };
+    MQTT_HOST: string;
+    MONGO_URL: string;
 
     //JWT
     JWT: {
@@ -37,7 +34,28 @@ class Config {
         EXPIRES_IN: string
     };
 
-    // LOG
+    SMTP: {
+        user_email: string;
+        user_passwd: string;
+    }
+
+
+    DB: {
+        host: string;
+        port: number;
+        user: string;
+        password: string;
+        database: string;
+        connectionLimit: string;
+        encrypt_key: string;
+        entity_path: string;
+    }
+
+    SMS: {
+        URL: string;
+        MERCHANT_KEY: string;
+    }
+
     LOG: {
         LOG_PATH: string;
         LEVEL: string;
@@ -45,10 +63,20 @@ class Config {
         FILE_CNT: string;
     }
 
+    ENCRYPT: {
+        ITERATIONS: number;
+        KEY_LENGTH: number;
+        DIGEST: string;
+        ENCRYPT_KEY: string;
+    }
+
     constructor() {
 
         // Global
         this.PORT = parseInt(process.env.PORT, 10);
+        this.DOCS_PORT = parseInt(process.env.DOCS_PORT, 10);
+        this.MQTT_HOST = process.env.MQTT_HOST;
+        this.MONGO_URL = process.env.MONGO_URL;
         this.SERVER_TYPE = process.env.SERVER_TYPE
         this.DEFAULT_FILE_PATH = process.env.DEFAULT_FILE_PATH
         this.FILE_SIZE = parseInt(process.env.FILE_SIZE);
@@ -58,6 +86,27 @@ class Config {
             EXPIRES_IN: process.env.JWT_EXPIRES_IN
         };
 
+        this.SMTP = {
+            user_email: process.env.USER_EMAIL,
+            user_passwd: process.env.USER_PASSWD
+        };
+
+        this.DB = {
+            host: process.env.DB_HOST,
+            port: parseInt(process.env.DB_PORT, 10),
+            user: process.env.USER,
+            password: process.env.PASSWORD,
+            database: process.env.DATABASE,
+            connectionLimit: process.env.connectionLimit,
+            encrypt_key: process.env.ENCRYPT_KEY,
+            entity_path: process.env.ENTITY_PATH
+        }
+
+        this.SMS = {
+            URL: process.env.URL,
+            MERCHANT_KEY: process.env.MERCHANT_KEY
+        }
+
         this.LOG = {
             LOG_PATH: process.env.LOG_PATH,
             LEVEL: process.env.LEVEL,
@@ -65,14 +114,11 @@ class Config {
             FILE_CNT: process.env.FILE_CNT
         }
 
-        this.DB = {
-            DATABASE: process.env.DATABASE,
-            USER: process.env.DB_USER,
-            PASSWORD: process.env.DB_PASSWORD,
-            PORT: parseInt(process.env.DB_PORT),
-            HOST: process.env.DB_HOST,
-            CONNECTION_LIMIT: process.env.CONNECTION_LIMIT,
-            ENTITY_PATH: process.env.ENTITY_PATH
+        this.ENCRYPT = {
+            ITERATIONS: parseInt(process.env.ITERATIONS),
+            KEY_LENGTH: parseInt(process.env.KEY_LENGTH),
+            DIGEST: process.env.DIGEST,
+            ENCRYPT_KEY: process.env.ENCRYPT_KEY
         }
 
     }
