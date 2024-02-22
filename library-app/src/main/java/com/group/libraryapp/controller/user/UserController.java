@@ -57,6 +57,23 @@ public class UserController {
                 long id =rs.getLong("id");
                 String name = rs.getString("name");
                 int age = rs.getInt("age");
+                /***
+                 객체 생성 과정:
+                 1. new 키워드를 사용하여 생성자를 호출합니다.
+                 2. 생성자는 새로운 객체를 메모리에 할당합니다.
+                 3. 생성자는 객체의 속성 값을 초기화합니다.
+                 4. 초기화된 객체는 코드에서 사용될 수 있습니다.
+
+                 new UserResponse 사용 이유
+                 1. UserResponse 생성자를 호출하여 새로운 UserResponse 객체를 메모리에 생성합니다.
+                 2. 생성자는 id, name, age 매개변수를 사용하여 객체의 속성 값을 설정합니다.
+                 3. 생성된 UserResponse 객체는 return 문을 통해 메서드 호출자에게 반환됩니다.
+
+
+                 new 키워드의 중요성:
+                 1.new 키워드는 객체 생성 과정을 시작하는 필수적인 요소입니다.
+                 2. new 키워드 없이는 객체를 생성할 수 없습니다.
+                 */
                 return new UserResponse(id, name, age);
             }
         });
