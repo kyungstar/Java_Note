@@ -1,4 +1,4 @@
-package com.group.libraryapp.repository;
+package com.group.libraryapp.repository.user;
 
 import com.group.libraryapp.dto.user.request.UserUpdateRequest;
 import com.group.libraryapp.dto.user.response.UserResponse;
